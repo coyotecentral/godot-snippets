@@ -27,8 +27,8 @@ func _ready() -> void:
 
 ## Call this from the owning CharacterBody2D after it wires up
 ## character/animated_sprite references on each state (see
-## player_controller.gd for the expected pattern).
-func setup(character: CharacterBody2D, animated_sprite: AnimatedSprite2D) -> void:
+## character_controller.gd for the expected pattern).
+func setup(character: CharacterController, animated_sprite: AnimatedSprite2D) -> void:
 	for state in states.values():
 		state.character = character
 		state.animated_sprite = animated_sprite

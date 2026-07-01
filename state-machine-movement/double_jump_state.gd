@@ -1,9 +1,12 @@
+## Optional state — only reachable when character.can_double_jump is true
+## (see the "Double Jump" export group in character_controller.gd).
 extends State
 
 func enter() -> void:
-	play_animation("run")
+	play_animation("double_jump")
 	if character:
-		character.reset_double_jump()
+		character.velocity.y = character.double_jump_velocity
+		character.has_double_jumped = true
 
 func physics_update(delta: float) -> void:
 	if character == null:
@@ -15,21 +18,12 @@ func physics_update(delta: float) -> void:
 		transitioned.emit(self, "dash")
 		return
 
-	if not character.is_on_floor():
-		transitioned.emit(self, "fall")
-		return
-
-	if Input.is_action_just_pressed("jump"):
-		transitioned.emit(self, "jump")
-		return
-
 	var direction := character.get_input_direction()
-	if direction == 0.0:
-		transitioned.emit(self, "idle")
-		return
-
 	character.velocity.x = direction * character.speed
-	if animated_sprite:
+	if animated_sprite and direction != 0.0:
 		animated_sprite.flip_h = direction < 0.0
 
 	character.move_and_slide()
+
+	if character.velocity.y >= 0.0:
+		transitioned.emit(self, "fall")

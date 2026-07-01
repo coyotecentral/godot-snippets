@@ -1,5 +1,4 @@
 extends State
-class_name FallState
 
 func enter() -> void:
 	play_animation("fall")
@@ -9,6 +8,14 @@ func physics_update(delta: float) -> void:
 		return
 
 	character.apply_gravity(delta)
+
+	if character.can_dash and character.can_start_dash() and Input.is_action_just_pressed("dash"):
+		transitioned.emit(self, "dash")
+		return
+
+	if character.can_double_jump and not character.has_double_jumped and Input.is_action_just_pressed("jump"):
+		transitioned.emit(self, "double_jump")
+		return
 
 	var direction := character.get_input_direction()
 	character.velocity.x = direction * character.speed
