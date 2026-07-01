@@ -4,12 +4,17 @@ func enter() -> void:
 	play_animation("idle")
 	if character:
 		character.velocity.x = 0.0
+		character.reset_double_jump()
 
 func physics_update(delta: float) -> void:
 	if character == null:
 		return
 
 	character.apply_gravity(delta)
+
+	if character.can_dash and character.can_start_dash() and Input.is_action_just_pressed("dash"):
+		transitioned.emit(self, "dash")
+		return
 
 	if not character.is_on_floor():
 		transitioned.emit(self, "fall")
