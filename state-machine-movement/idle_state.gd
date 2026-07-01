@@ -1,5 +1,4 @@
 extends State
-class_name IdleState
 
 func enter() -> void:
 	play_animation("idle")

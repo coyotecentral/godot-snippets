@@ -1,5 +1,4 @@
 extends State
-class_name FallState
 
 func enter() -> void:
 	play_animation("fall")

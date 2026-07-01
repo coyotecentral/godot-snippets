@@ -8,6 +8,7 @@
 ##       ├── Jump  (JumpState)
 ##       └── Fall  (FallState)
 extends CharacterBody2D
+class_name CharacterController
 
 @export var speed: float = 200.0
 @export var jump_velocity: float = -400.0

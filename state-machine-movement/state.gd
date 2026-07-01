@@ -8,7 +8,7 @@ class_name State
 signal transitioned(state: State, new_state_name: String)
 
 var state_machine: StateMachine
-var character: CharacterBody2D
+var character: CharacterController
 var animated_sprite: AnimatedSprite2D
 
 ## Called once when the state becomes active.
