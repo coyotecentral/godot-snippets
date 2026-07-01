@@ -4,6 +4,15 @@ A drop-in finite state machine for a Godot 4 `CharacterBody2D`, built around
 four core movement states — `Idle`, `Run`, `Jump`, `Fall` — plus two optional
 ones, `DoubleJump` and `Dash`, toggled on/off via exported properties.
 
+> **Note on source:** I couldn't pull the actual file contents from
+> `coyotecentral/VideoGameDesignKits` — GitHub's robots policy blocks
+> automated browsing of repo trees/blobs, and the repo isn't otherwise
+> indexed in a way I could fetch. So this isn't a line-for-line extraction;
+> it's a clean, general-purpose FSM built on the same enter/exit/physics_update
+> pattern most Godot platformer kits use, adapted for `CharacterBody2D` with
+> the animation null-checks you asked for. If you paste in the kit's actual
+> scripts, I can re-derive states from those directly.
+
 ## Files
 
 - `state.gd` — base `State` class. Every concrete state extends this.
@@ -16,6 +25,13 @@ ones, `DoubleJump` and `Dash`, toggled on/off via exported properties.
 - `character_controller.gd` — example `CharacterBody2D` script (`class_name
   CharacterController`) that wires everything together and exposes the
   toggles for the two optional states.
+- `character.tscn` — the scene from the layout diagram below, pre-wired:
+  scripts attached, `StateMachine.initial_state` pointed at `Idle`. Includes
+  a placeholder `CollisionShape2D` (16×32 `RectangleShape2D`) since a
+  `CharacterBody2D` needs one to collide with anything — swap it for
+  whatever matches your sprite. `AnimatedSprite2D` is left with no
+  `SpriteFrames` assigned; add your animations (`idle`, `run`, `jump`,
+  `fall`, `double_jump`, `dash`) there.
 
 ## Scene setup
 

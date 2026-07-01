@@ -1,0 +1,43 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://character_controller.gd" id="1_ctrl"]
+[ext_resource type="Script" path="res://state_machine.gd" id="2_fsm"]
+[ext_resource type="Script" path="res://idle_state.gd" id="3_idle"]
+[ext_resource type="Script" path="res://run_state.gd" id="4_run"]
+[ext_resource type="Script" path="res://jump_state.gd" id="5_jump"]
+[ext_resource type="Script" path="res://fall_state.gd" id="6_fall"]
+[ext_resource type="Script" path="res://double_jump_state.gd" id="7_djump"]
+[ext_resource type="Script" path="res://dash_state.gd" id="8_dash"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(16, 32)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ctrl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_fsm")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_idle")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("4_run")
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("5_jump")
+
+[node name="Fall" type="Node" parent="StateMachine"]
+script = ExtResource("6_fall")
+
+[node name="DoubleJump" type="Node" parent="StateMachine"]
+script = ExtResource("7_djump")
+
+[node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("8_dash")
